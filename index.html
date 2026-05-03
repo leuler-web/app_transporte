@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transporte UEA - v9.0</title>
+    <title>Transporte UEA - v10.0</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
         body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f4f8;min-height:100vh;}
@@ -17,7 +17,7 @@
         .tab-btn.active{background:#1a56db;color:white;}
         .tab-content{display:none;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
         .tab-content.active{display:block;}
-        .form-group{margin-bottom:12px;}
+        .form-group{margin-bottom:12px; flex: 1;}
         .form-group label{display:block;font-weight:bold;color:#2d3748;margin-bottom:4px;font-size:13px;}
         .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;}
         .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#1a56db;}
@@ -29,7 +29,6 @@
         .btn-secondary{background:#e2e8f0;color:#4a5568;}
         .btn-success{background:#10b981;color:white;}
         .btn-danger{background:#ef4444;color:white;}
-        .btn-warning{background:#f59e0b;color:white;}
         .btn-sm{padding:6px 10px;font-size:11px;width:auto;margin:2px;}
         .card{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:15px;margin:10px 0;}
         .resultado{display:none;background:#f0fff4;border:2px solid #10b981;border-radius:10px;padding:20px;margin-top:20px;}
@@ -53,7 +52,7 @@
 
     <div class="header">
         <h1>🚗 TRANSPORTE UEA</h1>
-        <p>Solicitação de Transporte • v9.0</p>
+        <p>Solicitação de Transporte Institucional • v10.0</p>
     </div>
 
     <div class="container">
@@ -66,15 +65,12 @@
             <button class="tab-btn" onclick="mostrarAba('sobre',this)">ℹ️ Sobre</button>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- ABA SOLICITAR -->
-        <!-- ============================================================ -->
         <div id="aba-solicitar" class="tab-content active">
             <h2>📝 Nova Solicitação</h2>
             <div id="formulario-container">
                 <div class="form-row">
-                    <div class="form-group"><label>📅 Data</label><input type="date" id="data_saida"></div>
-                    <div class="form-group"><label>🕐 Horário</label><select id="horario">
+                    <div class="form-group"><label>📅 Data de Saída</label><input type="date" id="data_saida"></div>
+                    <div class="form-group"><label>🕐 Horário de Saída</label><select id="horario">
                         <option value="">Selecione...</option>
                         <option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option>
                         <option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option>
@@ -83,21 +79,33 @@
                     </select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>📍 Saída</label><select id="local_saida"><option value="">Selecione...</option><option value="REITORIA">REITORIA</option><option value="EST">EST</option><option value="ESA">ESA</option><option value="ESAT">ESAT</option><option value="ENS">ENS</option><option value="ESO">ESO</option><option value="ED">ED</option><option value="Aeroporto">Aeroporto</option></select></div>
-                    <div class="form-group"><label>🎯 Destino</label><select id="destino"><option value="">Selecione...</option><option value="Aeroporto">Aeroporto</option><option value="REITORIA">REITORIA</option><option value="EST">EST</option><option value="ESA">ESA</option><option value="ESAT">ESAT</option><option value="ENS">ENS</option><option value="ESO">ESO</option><option value="ED">ED</option></select></div>
+                    <div class="form-group"><label>📍 Saída</label><select id="local_saida"></select></div>
+                    <div class="form-group"><label>🎯 Destino</label><select id="destino"></select></div>
                 </div>
                 <div class="form-row">
                     <div class="form-group"><label>👥 Pessoas <span id="qtd_valor" style="color:#1a56db;">2</span></label><input type="range" id="qtd_pessoas" min="1" max="44" value="2" oninput="document.getElementById('qtd_valor').innerText=this.value"></div>
-                    <div class="form-group"><label>🔄 Retorna?</label><select id="retorna"><option value="Sim">Sim</option><option value="Não">Não</option></select></div>
+                    <div class="form-group"><label>🔄 Retorna?</label><select id="retorna" onchange="toggleRetorno()"><option value="Não">Não</option><option value="Sim">Sim</option></select></div>
                 </div>
-                <div class="form-group"><label>📋 Atividade</label><textarea id="atividade" rows="2" placeholder="Descreva a atividade..."></textarea></div>
+                
+                <div class="form-row" id="container-retorno" style="display: none; background: #e0f2fe; padding: 10px; border-radius: 8px; margin-bottom: 12px; border: 1px dashed #0284c7;">
+                    <div class="form-group"><label>📅 Data de Retorno</label><input type="date" id="data_retorno"></div>
+                    <div class="form-group"><label>🕐 Horário de Retorno</label><select id="horario_retorno">
+                        <option value="">Selecione...</option>
+                        <option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option>
+                        <option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option>
+                    </select></div>
+                </div>
+
+                <div class="form-group"><label>📋 Atividade</label><textarea id="atividade" rows="2" placeholder="Descreva a atividade a realizar..."></textarea></div>
                 <div class="form-row">
                     <div class="form-group"><label>👤 Solicitante</label><input type="text" id="solicitante" placeholder="Nome completo"></div>
                     <div class="form-group"><label>🏢 Setor</label><select id="setor"><option value="">Selecione...</option><option value="GR">GR</option><option value="GVR">GVR</option><option value="PROINT">PROINT</option><option value="PROEX">PROEX</option><option value="PROGRAD">PROGRAD</option><option value="PROPESP">PROPESP</option><option value="PROPLAN">PROPLAN</option><option value="ESA/UEA">ESA/UEA</option><option value="ENS/UEA">ENS/UEA</option></select></div>
                 </div>
                 <div class="form-row">
                     <div class="form-group"><label>📱 WhatsApp</label><input type="tel" id="telefone" placeholder="5592992178613"></div>
-                    <div class="form-group"><label>📧 Email</label><input type="email" id="email" placeholder="seuemail@uea.edu.br"></div>
+                    <div class="form-group"><label>📧 E-mail Institucional</label><input type="email" id="email" placeholder="seuemail@uea.edu.br"></div>
                 </div>
                 <button class="btn btn-primary" onclick="solicitarTransporte()">🚀 SOLICITAR TRANSPORTE</button>
             </div>
@@ -105,9 +113,6 @@
             <div id="resultado-solicitacao" class="resultado"></div>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- ABA PAINEL -->
-        <!-- ============================================================ -->
         <div id="aba-painel" class="tab-content">
             <h2>🎛️ Painel de Gerenciamento</h2>
             <button class="btn btn-secondary" onclick="atualizarPainel()">🔄 ATUALIZAR</button>
@@ -118,19 +123,17 @@
             </div>
         </div>
 
-        <!-- MODAL DE CONFIRMAÇÃO -->
         <div class="modal-overlay" id="modal-confirmar">
             <div class="modal">
                 <h3>✅ Confirmar Solicitação</h3>
                 <div class="form-group"><label>🚘 Veículo</label><select id="modal-veiculo"></select></div>
                 <div class="form-group"><label>👨‍✈️ Motorista</label><select id="modal-motorista"></select></div>
-                <div class="form-group"><label>🕐 Horário de Saída</label><input type="text" id="modal-horario" placeholder="14:00"></div>
+                <div class="form-group"><label>🕐 Horário Confirmado</label><input type="text" id="modal-horario"></div>
                 <button class="btn btn-success" onclick="confirmarModal()">✅ CONFIRMAR E ENVIAR WHATSAPP</button>
                 <button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
             </div>
         </div>
 
-        <!-- MODAL DE REJEIÇÃO -->
         <div class="modal-overlay" id="modal-rejeitar">
             <div class="modal">
                 <h3>❌ Rejeitar Solicitação</h3>
@@ -140,72 +143,105 @@
             </div>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- ABA CADASTROS -->
-        <!-- ============================================================ -->
         <div id="aba-cadastros" class="tab-content">
             <h3>🚘 Veículos</h3>
             <div class="form-row">
-                <div class="form-group"><label>Marca</label><input type="text" id="marca" placeholder="Mercedes-Benz"></div>
-                <div class="form-group"><label>Modelo</label><input type="text" id="modelo" placeholder="Sprinter"></div>
+                <div class="form-group"><label>Marca</label><input type="text" id="marca" placeholder="Ex: Mercedes"></div>
+                <div class="form-group"><label>Modelo</label><input type="text" id="modelo" placeholder="Ex: Sprinter"></div>
             </div>
             <div class="form-row">
                 <div class="form-group"><label>Placa</label><input type="text" id="placa" placeholder="ABC-1234"></div>
-                <div class="form-group"><label>Tipo</label><select id="tipo"><option>Van (15)</option><option>Ônibus (44)</option><option>Carro</option></select></div>
+                <div class="form-group"><label>Tipo</label><select id="tipo"><option>Van</option><option>Ônibus</option><option>Carro</option></select></div>
+                <div class="form-group"><label>Capacidade</label><input type="number" id="capacidade" placeholder="15" min="1"></div>
             </div>
-            <button class="btn btn-success" onclick="cadVeiculo()">💾 CADASTRAR</button>
+            <button class="btn btn-success" onclick="cadVeiculo()">💾 CADASTRAR VEÍCULO</button>
             <div id="msg-veiculo" style="margin-top:8px;"></div>
             <hr>
+            
             <h3>👨‍✈️ Motoristas</h3>
             <div class="form-row">
-                <div class="form-group"><label>Nome</label><input type="text" id="nome_mot" placeholder="João Silva"></div>
+                <div class="form-group"><label>Nome Completo</label><input type="text" id="nome_mot" placeholder="Ex: João Silva"></div>
                 <div class="form-group"><label>WhatsApp</label><input type="tel" id="wpp_mot" placeholder="5592999999999"></div>
             </div>
-            <button class="btn btn-success" onclick="cadMotorista()">💾 CADASTRAR</button>
+            <div class="form-row">
+                <div class="form-group"><label>Número da CNH</label><input type="text" id="cnh_mot" placeholder="12345678900"></div>
+                <div class="form-group"><label>Categoria CNH</label><select id="cat_mot">
+                    <option value="B">B (Carro)</option>
+                    <option value="C">C (Caminhão)</option>
+                    <option value="D">D (Van/Ônibus)</option>
+                    <option value="E">E (Articulado)</option>
+                </select></div>
+            </div>
+            <button class="btn btn-success" onclick="cadMotorista()">💾 CADASTRAR MOTORISTA</button>
             <div id="msg-motorista" style="margin-top:8px;"></div>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- ABA LOCAIS -->
-        <!-- ============================================================ -->
         <div id="aba-locais" class="tab-content">
-            <h2>📍 Destinos</h2>
-            <div style="overflow-x:auto;"><table><thead><tr><th>Nome</th><th>Endereço</th><th>CEP</th></tr></thead><tbody id="corpo-locais"></tbody></table></div>
+            <h2>📍 Gestão de Locais e Destinos</h2>
+            <div class="card">
+                <h3>Adicionar Novo Local</h3>
+                <div class="form-row">
+                    <div class="form-group"><label>Nome do Local (Sigla/Nome)</label><input type="text" id="loc_nome" placeholder="Ex: FCE"></div>
+                    <div class="form-group"><label>CEP</label><input type="text" id="loc_cep" placeholder="00000-000"></div>
+                </div>
+                <div class="form-group"><label>Endereço Completo</label><input type="text" id="loc_end" placeholder="Rua, Número, Bairro, Cidade"></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Latitude</label><input type="number" step="any" id="loc_lat" placeholder="-3.1000"></div>
+                    <div class="form-group"><label>Longitude</label><input type="number" step="any" id="loc_lon" placeholder="-60.0000"></div>
+                </div>
+                <button class="btn btn-success" onclick="adicionarLocal()">➕ ADICIONAR LOCAL</button>
+            </div>
+            
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead><tr><th>Nome</th><th>Endereço</th><th>Coordenadas</th><th>Ação</th></tr></thead>
+                    <tbody id="corpo-locais"></tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- ABA SOBRE -->
-        <!-- ============================================================ -->
         <div id="aba-sobre" class="tab-content">
-            <h2>ℹ️ Transporte UEA v9.0</h2>
+            <h2>ℹ️ Transporte UEA v10.0</h2>
             <div class="card">
                 <h3>📧 Fluxo de Notificações</h3>
                 <p>1️⃣ Solicitante → <b>EMAIL automático</b> com comprovante</p>
-                <p>2️⃣ Admin confirma → <b>WHATSAPP</b> com veículo e motorista</p>
-                <p>3️⃣ Admin rejeita → <b>WHATSAPP</b> com motivo</p>
+                <p>2️⃣ Admin confirma → <b>WHATSAPP manual</b> com veículo e motorista</p>
+                <p>3️⃣ Admin rejeita → <b>WHATSAPP manual</b> com motivo</p>
             </div>
-            <p><strong>Admin:</strong> leuler@uea.edu.br</p>
-            <p><strong>WhatsApp Setor:</strong> (92) 99217-8613</p>
+            <p><strong>Segurança:</strong> Apenas e-mails terminados em <code>@uea.edu.br</code> são aceites pelo sistema.</p>
         </div>
     </div>
 
     <script>
         // ============================================================
-        // BANCO DE DADOS
+        // BANCO DE DADOS E UTILITÁRIOS
         // ============================================================
         function getDB(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return[];}}
         function setDB(k,d){localStorage.setItem(k,JSON.stringify(d));}
+        
+        // Pega objeto do BD (para os locais)
+        function getDBObj(k){try{return JSON.parse(localStorage.getItem(k)||'{}');}catch(e){return{};}}
 
-        const LOCAIS_UEA={
-            "REITORIA":{endereco:"Av. Djalma Batista, 3578 - Flores, Manaus - AM, 69050-010",cep:"69050-010",lat:-3.0952,lon:-60.0218},
-            "EST":{endereco:"Av. Darcy Vargas, 1200 - Parque Dez, Manaus - AM, 69050-020",cep:"69050-020",lat:-3.0787,lon:-60.0150},
-            "ESA":{endereco:"Av. Carvalho Leal, 1777 - Cachoeirinha, Manaus - AM, 69065-001",cep:"69065-001",lat:-3.1225,lon:-60.0180},
-            "ESAT":{endereco:"Av. Leonardo Malcher, 1728 - Praça 14, Manaus - AM, 69020-170",cep:"69020-170",lat:-3.1280,lon:-60.0220},
-            "ENS":{endereco:"Av. Djalma Batista, 2470 - Chapada, Manaus - AM, 69050-010",cep:"69050-010",lat:-3.0980,lon:-60.0250},
-            "ESO":{endereco:"Av. Castelo Branco, 504 - Cachoeirinha, Manaus - AM, 69065-010",cep:"69065-010",lat:-3.1250,lon:-60.0200},
-            "ED":{endereco:"Av. Leonardo Malcher, 1140 - Centro, Manaus - AM, 69020-170",cep:"69020-170",lat:-3.1300,lon:-60.0240},
-            "Aeroporto":{endereco:"Av. Santos Dumont, 1350 - Tarumã, Manaus - AM, 69041-000",cep:"69041-000",lat:-3.0386,lon:-60.0497},
+        const LOCAIS_PADRAO = {
+            "REITORIA": {endereco: "Av. Djalma Batista, 3578", cep: "69050-010", lat: -3.0952, lon: -60.0218},
+            "EST": {endereco: "Av. Darcy Vargas, 1200", cep: "69050-020", lat: -3.0787, lon: -60.0150},
+            "ESA": {endereco: "Av. Carvalho Leal, 1777", cep: "69065-001", lat: -3.1225, lon: -60.0180},
+            "ESAT": {endereco: "Av. Leonardo Malcher, 1728", cep: "69020-170", lat: -3.1280, lon: -60.0220},
+            "ENS": {endereco: "Av. Djalma Batista, 2470", cep: "69050-010", lat: -3.0980, lon: -60.0250},
+            "ESO": {endereco: "Av. Castelo Branco, 504", cep: "69065-010", lat: -3.1250, lon: -60.0200},
+            "ED": {endereco: "Av. Leonardo Malcher, 1140", cep: "69020-170", lat: -3.1300, lon: -60.0240},
+            "Aeroporto": {endereco: "Av. Santos Dumont, 1350", cep: "69041-000", lat: -3.0386, lon: -60.0497}
         };
+
+        function getLocais() {
+            let locais = getDBObj('locais_uea');
+            // Se estiver vazio, popula com os padrões
+            if (Object.keys(locais).length === 0) {
+                locais = LOCAIS_PADRAO;
+                setDB('locais_uea', locais);
+            }
+            return locais;
+        }
 
         let indexSelecionado = null;
 
@@ -226,19 +262,26 @@
             btn.classList.add('active');
         }
 
-        // ============================================================
-        // EMAIL
-        // ============================================================
-        function enviarEmail(email,nome,id,data,horario,origem,destino,distancia,duracao){
-            const assunto=`✅ Solicitação ${id} Registrada - Transporte UEA`;
-            const corpo=`Sua solicitação de transporte foi REGISTRADA!\n\n🆔 ${id}\n👤 ${nome}\n📅 ${data} às ${horario}\n📍 ${origem} → ${destino}\n📏 ${distancia} km | ⏱️ ~${duracao} min\n\n⏳ Aguarde a confirmação do veículo e motorista.\n\n🚗 Transporte UEA`;
-            const link=`mailto:${email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
-            setTimeout(()=>window.open(link,'_blank'),800);
-            console.log('📧 Email:',email);
+        function toggleRetorno() {
+            const retorna = document.getElementById('retorna').value;
+            const container = document.getElementById('container-retorno');
+            if (retorna === 'Sim') {
+                container.style.display = 'flex';
+            } else {
+                container.style.display = 'none';
+                document.getElementById('data_retorno').value = '';
+                document.getElementById('horario_retorno').value = '';
+            }
+        }
+
+        function enviarEmail(email,nome,id,data,horario,origem,destino,distancia,duracao, retorna){
+            const assunto=`✅ Solicitação ${id} - Transporte UEA`;
+            const corpo=`Sua solicitação de transporte foi REGISTRADA!\n\n🆔 ${id}\n👤 ${nome}\n📅 Saída: ${data} às ${horario}\n🔄 Retorno: ${retorna}\n📍 ${origem} → ${destino}\n\n⏳ Aguarde a confirmação.\n\n🚗 Transporte Institucional UEA`;
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
         }
 
         // ============================================================
-        // SOLICITAÇÃO
+        // SOLICITAÇÃO E VALIDAÇÕES
         // ============================================================
         function solicitarTransporte(){
             const data_saida=document.getElementById('data_saida').value;
@@ -247,6 +290,8 @@
             const destino=document.getElementById('destino').value;
             const qtd=document.getElementById('qtd_pessoas').value;
             const retorna=document.getElementById('retorna').value;
+            const data_retorno=document.getElementById('data_retorno').value;
+            const horario_retorno=document.getElementById('horario_retorno').value;
             const atividade=document.getElementById('atividade').value;
             const solicitante=document.getElementById('solicitante').value;
             const setor=document.getElementById('setor').value;
@@ -254,43 +299,63 @@
             const email=document.getElementById('email').value;
 
             const erros=[];
-            if(!data_saida)erros.push('Data');
-            if(!horario)erros.push('Horário');
+            if(!data_saida)erros.push('Data de Saída');
+            if(!horario)erros.push('Horário de Saída');
             if(!local_saida)erros.push('Local de Saída');
             if(!destino)erros.push('Destino');
+            if(local_saida && destino && local_saida === destino)erros.push('Saída e Destino iguais');
+            if(retorna === 'Sim') {
+                if(!data_retorno) erros.push('Data de Retorno');
+                if(!horario_retorno) erros.push('Horário de Retorno');
+            }
             if(!atividade)erros.push('Atividade');
             if(!solicitante)erros.push('Solicitante');
+            if(!email)erros.push('E-mail');
 
-            if(erros.length){alert('❌ Preencha: '+erros.join(', '));return;}
+            if(erros.length){alert('❌ Preencha corretamente:\n- '+erros.join('\n- '));return;}
 
-            const o=LOCAIS_UEA[local_saida]||{lat:-3.0952,lon:-60.0218,endereco:local_saida,cep:'N/D'};
-            const d=LOCAIS_UEA[destino]||{lat:-3.0386,lon:-60.0497,endereco:destino,cep:'N/D'};
-            const{distancia,duracao}=calcRota(o.lat,o.lon,d.lat,d.lon);
-            const mapa=linkMapa(o.lat,o.lon,d.lat,d.lon);
-            const id=gerarID();
-            const partes=data_saida.split('-');
-            const dataF=`${partes[2]}/${partes[1]}/${partes[0]}`;
+            // TRAVA DE SEGURANÇA: E-MAIL INSTITUCIONAL
+            if(!email.toLowerCase().endsWith('@uea.edu.br')){
+                alert('❌ ACESSO RESTRITO!\nPor favor, utilize um e-mail do domínio @uea.edu.br para realizar a solicitação.');
+                return;
+            }
+
+            const locais = getLocais();
+            const o = locais[local_saida] || {lat:-3.0952, lon:-60.0218};
+            const d = locais[destino] || {lat:-3.0386, lon:-60.0497};
+            const {distancia, duracao} = calcRota(o.lat, o.lon, d.lat, d.lon);
+            const mapa = linkMapa(o.lat, o.lon, d.lat, d.lon);
+            const id = gerarID();
+            
+            const partes = data_saida.split('-');
+            const dataF = `${partes[2]}/${partes[1]}/${partes[0]}`;
+            
+            let txtRetorno = 'Não';
+            if(retorna === 'Sim'){
+                const partesR = data_retorno.split('-');
+                txtRetorno = `${partesR[2]}/${partesR[1]}/${partesR[0]} às ${horario_retorno}`;
+            }
 
             const solicitacoes=getDB('solicitacoes');
-            solicitacoes.push({id,data:dataF,horario,local_saida,destino,qtd_pessoas:qtd,retorna,atividade,solicitante,setor,telefone,email,distancia,duracao,linkMapa:mapa,status:'PENDENTE',veiculo:'',motorista:'',horario_previsto:''});
+            solicitacoes.push({
+                id, data:dataF, horario, local_saida, destino, qtd_pessoas:qtd,
+                retorna: txtRetorno, atividade, solicitante, setor, telefone, email,
+                distancia, duracao, linkMapa:mapa, status:'PENDENTE', veiculo:'', motorista:'', horario_previsto:''
+            });
             setDB('solicitacoes',solicitacoes);
 
-            enviarEmail(email,solicitante,id,dataF,horario,local_saida,destino,distancia,duracao);
+            enviarEmail(email, solicitante, id, dataF, horario, local_saida, destino, distancia, duracao, txtRetorno);
 
             const resultado=document.getElementById('resultado-solicitacao');
             resultado.innerHTML=`
-                <h2 style="color:#10b981;">✅ Solicitação Registrada!</h2>
+                <h2 style="color:#10b981;">✅ Solicitação Registada!</h2>
                 <p><strong>🆔 ID:</strong> ${id}</p>
-                <p><strong>📅 Data:</strong> ${dataF} às ${horario}</p>
+                <p><strong>📅 Saída:</strong> ${dataF} às ${horario}</p>
                 <p><strong>📍 Rota:</strong> ${local_saida} → ${destino}</p>
-                <p><strong>📏 Distância:</strong> ${distancia} km | <strong>⏱️:</strong> ~${duracao} min</p>
-                <p><a href="${mapa}" target="_blank" style="color:#1a56db;">🗺️ Ver no Mapa</a></p>
                 <div class="email-box">
-                    <p style="font-weight:bold;">📧 Comprovante enviado para:</p>
+                    <p style="font-weight:bold;">📧 E-mail acionado para:</p>
                     <p style="font-size:16px;color:#0284c7;">${email}</p>
-                    <p style="font-size:11px;color:#666;">Verifique sua caixa de entrada</p>
                 </div>
-                <p style="text-align:center;color:#666;font-size:12px;">⏳ Aguarde a confirmação do veículo e motorista</p>
             `;
             resultado.classList.add('show');
             document.getElementById('formulario-container').style.display='none';
@@ -299,27 +364,13 @@
         }
 
         function novaSolicitacao(){
-            // Limpar formulário
-            document.getElementById('data_saida').valueAsDate=new Date();
-            document.getElementById('horario').value='';
-            document.getElementById('local_saida').value='';
-            document.getElementById('destino').value='';
-            document.getElementById('qtd_pessoas').value=2;
-            document.getElementById('qtd_valor').innerText='2';
-            document.getElementById('atividade').value='';
-            document.getElementById('solicitante').value='';
-            document.getElementById('setor').value='';
-            document.getElementById('telefone').value='';
-            document.getElementById('email').value='';
-            
             document.getElementById('formulario-container').style.display='block';
             document.getElementById('btn-nova').style.display='none';
             document.getElementById('resultado-solicitacao').classList.remove('show');
-            document.getElementById('resultado-solicitacao').innerHTML='';
         }
 
         // ============================================================
-        // PAINEL
+        // PAINEL DE GESTÃO E MODAIS
         // ============================================================
         function atualizarPainel(){
             const solicitacoes=getDB('solicitacoes');
@@ -339,71 +390,50 @@
                 if(s.status==='REJEITADA')bc='badge-rejeitada';
                 let acoes='';
                 if(s.status==='PENDENTE'){
-                    acoes=`<button onclick="abrirModalConfirmar(${i})" class="btn btn-sm" style="background:#10b981;color:white;">✅</button>
-                           <button onclick="abrirModalRejeitar(${i})" class="btn btn-sm" style="background:#ef4444;color:white;">❌</button>`;
+                    acoes=`<button onclick="abrirModalConfirmar(${i})" class="btn btn-sm btn-success">✅</button>
+                           <button onclick="abrirModalRejeitar(${i})" class="btn btn-sm btn-danger">❌</button>`;
                 }else if(s.status==='CONFIRMADA'){
                     acoes=`<small>🚘 ${s.veiculo}<br>👨‍✈️ ${s.motorista}</small>`;
                 }else{acoes='—';}
                 html+=`<tr><td><strong>${s.id}</strong></td><td>${s.data}</td><td>${s.solicitante}</td><td>${s.local_saida}→${s.destino}</td><td>${s.distancia}</td><td><span class="badge ${bc}">${s.status}</span></td><td>${acoes}</td></tr>`;
             });
             tbody.innerHTML=html;
-            resumo.innerHTML=`⏳ <strong>${p}</strong> Pendentes | ✅ <strong>${c}</strong> Confirmadas | ❌ <strong>${r}</strong> Rejeitadas | 📋 <strong>${solicitacoes.length}</strong> Total`;
+            resumo.innerHTML=`⏳ <strong>${p}</strong> Pendentes | ✅ <strong>${c}</strong> Confirmadas | ❌ <strong>${r}</strong> Rejeitadas`;
         }
 
-        // ============================================================
-        // MODAL CONFIRMAR
-        // ============================================================
         function abrirModalConfirmar(index){
             indexSelecionado=index;
             const veiculos=getDB('veiculos');
             const motoristas=getDB('motoristas');
-            
             let optV='<option value="">Selecione um veículo...</option>';
-            veiculos.forEach(v=>optV+=`<option value="${v.marca} ${v.modelo} - ${v.placa}">${v.marca} ${v.modelo} - ${v.placa} (${v.capacidade}lug)</option>`);
-            if(!veiculos.length)optV+='<option value="">⚠️ Nenhum veículo cadastrado</option>';
+            veiculos.forEach(v=>optV+=`<option value="${v.marca} ${v.modelo} - ${v.placa}">${v.marca} ${v.modelo} - ${v.placa} (${v.capacidade} lug)</option>`);
             
             let optM='<option value="">Selecione um motorista...</option>';
-            motoristas.forEach(m=>optM+=`<option value="${m.nome}">${m.nome} - ${m.whatsapp}</option>`);
-            if(!motoristas.length)optM+='<option value="">⚠️ Nenhum motorista cadastrado</option>';
+            motoristas.forEach(m=>optM+=`<option value="${m.nome}">${m.nome} (CNH: ${m.categoria})</option>`);
             
             document.getElementById('modal-veiculo').innerHTML=optV;
             document.getElementById('modal-motorista').innerHTML=optM;
-            
-            const s=getDB('solicitacoes')[index];
-            document.getElementById('modal-horario').value=s.horario;
-            
+            document.getElementById('modal-horario').value=getDB('solicitacoes')[index].horario;
             document.getElementById('modal-confirmar').classList.add('active');
         }
 
         function confirmarModal(){
-            const veiculo=document.getElementById('modal-veiculo').value;
-            const motorista=document.getElementById('modal-motorista').value;
-            const horario=document.getElementById('modal-horario').value;
+            const v=document.getElementById('modal-veiculo').value;
+            const m=document.getElementById('modal-motorista').value;
+            const h=document.getElementById('modal-horario').value;
+            if(!v || !m){alert('Selecione Veículo e Motorista!');return;}
             
-            if(!veiculo){alert('Selecione um veículo!');return;}
-            if(!motorista){alert('Selecione um motorista!');return;}
+            const sols=getDB('solicitacoes');
+            const s=sols[indexSelecionado];
+            s.status='CONFIRMADA'; s.veiculo=v; s.motorista=m; s.horario_previsto=h;
+            setDB('solicitacoes',sols);
             
-            const solicitacoes=getDB('solicitacoes');
-            const s=solicitacoes[indexSelecionado];
-            s.status='CONFIRMADA';
-            s.veiculo=veiculo;
-            s.motorista=motorista;
-            s.horario_previsto=horario;
-            setDB('solicitacoes',solicitacoes);
-            
-            // WhatsApp
-            const msg=`✅ *TRANSPORTE CONFIRMADO!*\n\n🆔 ${s.id}\n👤 ${s.solicitante}\n📅 ${s.data} às ${horario}\n📍 ${s.local_saida} → ${s.destino}\n🚘 *${veiculo}*\n👨‍✈️ *${motorista}*\n📏 ${s.distancia} km\n\n*Boa viagem! 🚀*\n_Transporte UEA_`;
-            const link=linkWpp(s.telefone,msg);
-            window.open(link,'_blank');
-            
-            document.getElementById('modal-confirmar').classList.remove('active');
-            alert(`✅ Solicitação CONFIRMADA!\n\n📱 WhatsApp enviado para:\n${s.telefone}`);
+            let msg=`✅ *TRANSPORTE CONFIRMADO!*\n\n🆔 ${s.id}\n👤 ${s.solicitante}\n📅 ${s.data} às ${h}\n📍 ${s.local_saida} → ${s.destino}\n🚘 *${v}*\n👨‍✈️ *${m}*\n\n*Boa viagem! 🚀*`;
+            window.open(linkWpp(s.telefone,msg),'_blank');
+            fecharModal();
             atualizarPainel();
         }
 
-        // ============================================================
-        // MODAL REJEITAR
-        // ============================================================
         function abrirModalRejeitar(index){
             indexSelecionado=index;
             document.getElementById('modal-motivo').value='';
@@ -412,21 +442,15 @@
 
         function rejeitarModal(){
             const motivo=document.getElementById('modal-motivo').value;
-            if(!motivo){alert('Informe o motivo da rejeição!');return;}
+            if(!motivo){alert('Informe o motivo!');return;}
+            const sols=getDB('solicitacoes');
+            const s=sols[indexSelecionado];
+            s.status='REJEITADA'; s.motivo=motivo;
+            setDB('solicitacoes',sols);
             
-            const solicitacoes=getDB('solicitacoes');
-            const s=solicitacoes[indexSelecionado];
-            s.status='REJEITADA';
-            s.motivo=motivo;
-            setDB('solicitacoes',solicitacoes);
-            
-            // WhatsApp
-            const msg=`❌ *SOLICITAÇÃO NÃO ATENDIDA*\n\n🆔 ${s.id}\n👤 ${s.solicitante}\n📅 ${s.data}\n📍 ${s.local_saida} → ${s.destino}\n\n📝 *Motivo:* ${motivo}\n\n📞 Dúvidas: (92) 99217-8613\n_Transporte UEA_`;
-            const link=linkWpp(s.telefone,msg);
-            window.open(link,'_blank');
-            
-            document.getElementById('modal-rejeitar').classList.remove('active');
-            alert(`❌ Solicitação REJEITADA!\n\n📱 WhatsApp enviado para:\n${s.telefone}\n📝 Motivo: ${motivo}`);
+            let msg=`❌ *SOLICITAÇÃO NÃO ATENDIDA*\n\n🆔 ${s.id}\n📍 ${s.local_saida} → ${s.destino}\n📝 *Motivo:* ${motivo}\n\n📞 Dúvidas: (92) 99217-8613`;
+            window.open(linkWpp(s.telefone,msg),'_blank');
+            fecharModalRejeitar();
             atualizarPainel();
         }
 
@@ -434,39 +458,107 @@
         function fecharModalRejeitar(){document.getElementById('modal-rejeitar').classList.remove('active');}
 
         // ============================================================
-        // CADASTROS
+        // CADASTROS DE VEÍCULOS E MOTORISTAS (COMPLETO)
         // ============================================================
         function cadVeiculo(){
-            const m=document.getElementById('marca').value,mo=document.getElementById('modelo').value,p=document.getElementById('placa').value;
-            if(!m||!mo||!p){alert('Preencha Marca, Modelo e Placa!');return;}
+            const m=document.getElementById('marca').value, mo=document.getElementById('modelo').value;
+            const p=document.getElementById('placa').value, t=document.getElementById('tipo').value;
+            const c=document.getElementById('capacidade').value;
+            if(!m||!mo||!p||!c){alert('Preencha todos os campos!');return;}
             const veiculos=getDB('veiculos');
-            veiculos.push({marca:m,modelo:mo,placa:p.toUpperCase(),tipo:document.getElementById('tipo').value,capacidade:document.getElementById('capacidade').value||15});
+            veiculos.push({marca:m, modelo:mo, placa:p.toUpperCase(), tipo:t, capacidade:c});
             setDB('veiculos',veiculos);
-            document.getElementById('msg-veiculo').innerHTML=`<p style="color:#10b981;">✅ ${m} ${mo} - ${p.toUpperCase()} (${veiculos.length} veículos)</p>`;
-            document.getElementById('marca').value='';document.getElementById('modelo').value='';document.getElementById('placa').value='';
+            document.getElementById('msg-veiculo').innerHTML=`<p style="color:#10b981;">✅ Veículo guardado!</p>`;
+            document.getElementById('marca').value=''; document.getElementById('modelo').value=''; 
+            document.getElementById('placa').value=''; document.getElementById('capacidade').value='';
         }
 
         function cadMotorista(){
-            const n=document.getElementById('nome_mot').value,w=document.getElementById('wpp_mot').value;
-            if(!n||!w){alert('Preencha Nome e WhatsApp!');return;}
+            const n=document.getElementById('nome_mot').value, w=document.getElementById('wpp_mot').value;
+            const cnh=document.getElementById('cnh_mot').value, cat=document.getElementById('cat_mot').value;
+            if(!n||!w||!cnh){alert('Preencha Nome, WhatsApp e CNH!');return;}
             const motoristas=getDB('motoristas');
-            motoristas.push({nome:n,whatsapp:w});
+            motoristas.push({nome:n, whatsapp:w, cnh:cnh, categoria:cat});
             setDB('motoristas',motoristas);
-            document.getElementById('msg-motorista').innerHTML=`<p style="color:#10b981;">✅ ${n} (${motoristas.length} motoristas)</p>`;
-            document.getElementById('nome_mot').value='';document.getElementById('wpp_mot').value='';
+            document.getElementById('msg-motorista').innerHTML=`<p style="color:#10b981;">✅ Motorista ${n} (Cat. ${cat}) registado!</p>`;
+            document.getElementById('nome_mot').value=''; document.getElementById('wpp_mot').value='';
+            document.getElementById('cnh_mot').value='';
+        }
+
+        // ============================================================
+        // GESTÃO DINÂMICA DE LOCAIS E DESTINOS
+        // ============================================================
+        function carregarInterfaceLocais(){
+            const locais = getLocais();
+            
+            // 1. Atualizar Tabela na aba Locais
+            let htmlTabela = '';
+            for(const [nome, dados] of Object.entries(locais)){
+                htmlTabela += `<tr>
+                    <td><strong>${nome}</strong></td>
+                    <td>${dados.endereco}<br><small>CEP: ${dados.cep}</small></td>
+                    <td>${dados.lat}, ${dados.lon}</td>
+                    <td><button onclick="removerLocal('${nome}')" class="btn btn-sm btn-danger">Excluir</button></td>
+                </tr>`;
+            }
+            document.getElementById('corpo-locais').innerHTML = htmlTabela;
+
+            // 2. Atualizar Dropdowns na aba Solicitar
+            let optLocais = '<option value="">Selecione...</option>';
+            for(const nome of Object.keys(locais)){
+                optLocais += `<option value="${nome}">${nome}</option>`;
+            }
+            document.getElementById('local_saida').innerHTML = optLocais;
+            document.getElementById('destino').innerHTML = optLocais;
+        }
+
+        function adicionarLocal(){
+            const nome = document.getElementById('loc_nome').value.trim();
+            const cep = document.getElementById('loc_cep').value;
+            const end = document.getElementById('loc_end').value;
+            const lat = parseFloat(document.getElementById('loc_lat').value);
+            const lon = parseFloat(document.getElementById('loc_lon').value);
+
+            if(!nome || !end || isNaN(lat) || isNaN(lon)){
+                alert('⚠️ Preencha Nome, Endereço, Latitude e Longitude válidos!');
+                return;
+            }
+
+            const locais = getLocais();
+            if(locais[nome]){
+                alert('⚠️ Já existe um local com este nome!');
+                return;
+            }
+
+            locais[nome] = {endereco: end, cep: cep || 'N/D', lat: lat, lon: lon};
+            setDB('locais_uea', locais);
+            
+            // Limpa os campos
+            document.getElementById('loc_nome').value = '';
+            document.getElementById('loc_cep').value = '';
+            document.getElementById('loc_end').value = '';
+            document.getElementById('loc_lat').value = '';
+            document.getElementById('loc_lon').value = '';
+            
+            carregarInterfaceLocais();
+            alert(`✅ Local "${nome}" adicionado com sucesso!`);
+        }
+
+        function removerLocal(nome){
+            if(!confirm(`Tem certeza que deseja apagar o destino "${nome}"?`)) return;
+            const locais = getLocais();
+            delete locais[nome];
+            setDB('locais_uea', locais);
+            carregarInterfaceLocais();
         }
 
         // ============================================================
         // INICIALIZAÇÃO
         // ============================================================
         document.getElementById('data_saida').valueAsDate=new Date();
-        
-        let htmlLocais='';
-        for(const[nome,dados]of Object.entries(LOCAIS_UEA))htmlLocais+=`<tr><td>${nome}</td><td>${dados.endereco}</td><td>${dados.cep}</td></tr>`;
-        document.getElementById('corpo-locais').innerHTML=htmlLocais;
-        
+        carregarInterfaceLocais();
         atualizarPainel();
-        console.log('✅ Transporte UEA v9.0 pronto!');
+        console.log('✅ Transporte UEA v10.0 pronto!');
     </script>
 </body>
 </html>
