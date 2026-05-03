@@ -1,66 +1,69 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transporte UEA - v8.0</title>
+    <title>Transporte UEA - v9.0</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f4f8; min-height: 100vh; }
-        .header { background: linear-gradient(135deg, #1a56db, #1e40af); color: white; padding: 20px; text-align: center; }
-        .header h1 { font-size: 22px; margin: 0; }
-        .header p { color: #dbeafe; margin: 5px 0 0 0; font-size: 13px; }
-        .container { max-width: 650px; margin: 0 auto; padding: 15px; }
-        .tab-buttons { display: flex; gap: 4px; margin-bottom: 15px; flex-wrap: wrap; }
-        .tab-btn { flex: 1; min-width: 60px; padding: 10px 4px; border: none; background: #e2e8f0; color: #4a5568; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 11px; transition: all 0.3s; }
-        .tab-btn:hover { background: #cbd5e0; }
-        .tab-btn.active { background: #1a56db; color: white; }
-        .tab-content { display: none; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .tab-content.active { display: block; }
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-weight: bold; color: #2d3748; margin-bottom: 4px; font-size: 13px; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #1a56db; }
-        .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .form-row .form-group { flex: 1; min-width: 130px; }
-        .btn { padding: 12px 20px; border: none; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 8px; }
-        .btn-primary { background: #1a56db; color: white; }
-        .btn-primary:hover { background: #1e40af; }
-        .btn-secondary { background: #e2e8f0; color: #4a5568; }
-        .btn-success { background: #10b981; color: white; }
-        .btn-danger { background: #ef4444; color: white; }
-        .btn-warning { background: #f59e0b; color: white; }
-        .card { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 15px; margin: 10px 0; }
-        .resultado { display: none; background: #f0fff4; border: 2px solid #10b981; border-radius: 10px; padding: 20px; margin-top: 20px; }
-        .resultado.show { display: block; }
-        .badge { display: inline-block; padding: 4px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; }
-        .badge-pendente { background: #fef3c7; color: #92400e; }
-        .badge-confirmada { background: #d1fae5; color: #065f46; }
-        .badge-rejeitada { background: #fee2e2; color: #991b1b; }
-        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11px; }
-        th { background: #1a56db; color: white; padding: 8px; text-align: left; }
-        td { padding: 6px; border-bottom: 1px solid #e2e8f0; }
-        .wpp-link { display: inline-block; background: #25d366; color: white; padding: 8px 15px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 13px; margin: 5px; }
-        .email-box { background: #e0f2fe; border: 2px solid #0284c7; border-radius: 10px; padding: 15px; margin: 10px 0; text-align: center; }
-        hr { margin: 20px 0; border: none; border-top: 1px solid #e2e8f0; }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f4f8;min-height:100vh;}
+        .header{background:linear-gradient(135deg,#1a56db,#1e40af);color:white;padding:20px;text-align:center;}
+        .header h1{font-size:22px;margin:0;}
+        .header p{color:#dbeafe;margin:5px 0 0 0;font-size:13px;}
+        .container{max-width:650px;margin:0 auto;padding:15px;}
+        .tab-buttons{display:flex;gap:4px;margin-bottom:15px;flex-wrap:wrap;}
+        .tab-btn{flex:1;min-width:55px;padding:10px 3px;border:none;background:#e2e8f0;color:#4a5568;cursor:pointer;border-radius:8px;font-weight:bold;font-size:10px;transition:all .3s;}
+        .tab-btn:hover{background:#cbd5e0;}
+        .tab-btn.active{background:#1a56db;color:white;}
+        .tab-content{display:none;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+        .tab-content.active{display:block;}
+        .form-group{margin-bottom:12px;}
+        .form-group label{display:block;font-weight:bold;color:#2d3748;margin-bottom:4px;font-size:13px;}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#1a56db;}
+        .form-row{display:flex;gap:10px;flex-wrap:wrap;}
+        .form-row .form-group{flex:1;min-width:130px;}
+        .btn{padding:12px 20px;border:none;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer;width:100%;margin-top:8px;transition:all .2s;}
+        .btn-primary{background:#1a56db;color:white;}
+        .btn-primary:hover{background:#1e40af;}
+        .btn-secondary{background:#e2e8f0;color:#4a5568;}
+        .btn-success{background:#10b981;color:white;}
+        .btn-danger{background:#ef4444;color:white;}
+        .btn-warning{background:#f59e0b;color:white;}
+        .btn-sm{padding:6px 10px;font-size:11px;width:auto;margin:2px;}
+        .card{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:15px;margin:10px 0;}
+        .resultado{display:none;background:#f0fff4;border:2px solid #10b981;border-radius:10px;padding:20px;margin-top:20px;}
+        .resultado.show{display:block;}
+        .badge{display:inline-block;padding:4px 10px;border-radius:15px;font-size:11px;font-weight:bold;}
+        .badge-pendente{background:#fef3c7;color:#92400e;}
+        .badge-confirmada{background:#d1fae5;color:#065f46;}
+        .badge-rejeitada{background:#fee2e2;color:#991b1b;}
+        table{width:100%;border-collapse:collapse;margin:10px 0;font-size:11px;}
+        th{background:#1a56db;color:white;padding:8px;text-align:left;}
+        td{padding:6px;border-bottom:1px solid #e2e8f0;}
+        .email-box{background:#e0f2fe;border:2px solid #0284c7;border-radius:10px;padding:15px;margin:10px 0;text-align:center;}
+        hr{margin:20px 0;border:none;border-top:1px solid #e2e8f0;}
+        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1000;justify-content:center;align-items:center;}
+        .modal-overlay.active{display:flex;}
+        .modal{background:white;border-radius:12px;padding:25px;width:90%;max-width:450px;max-height:80vh;overflow-y:auto;}
+        .modal h3{margin-bottom:15px;color:#1a56db;}
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1>🚗 TRANSPORTE UEA</h1>
-        <p>Solicitação de Transporte • v8.0</p>
+        <p>Solicitação de Transporte • v9.0</p>
     </div>
 
     <div class="container">
         
         <div class="tab-buttons">
-            <button class="tab-btn active" onclick="mostrarAba('solicitar', this)">🚗 Solicitar</button>
-            <button class="tab-btn" onclick="mostrarAba('painel', this)">🎛️ Painel</button>
-            <button class="tab-btn" onclick="mostrarAba('cadastros', this)">📋 Cadastros</button>
-            <button class="tab-btn" onclick="mostrarAba('locais', this)">📍 Locais</button>
-            <button class="tab-btn" onclick="mostrarAba('sobre', this)">ℹ️ Sobre</button>
+            <button class="tab-btn active" onclick="mostrarAba('solicitar',this)">🚗 Solicitar</button>
+            <button class="tab-btn" onclick="mostrarAba('painel',this)">🎛️ Painel</button>
+            <button class="tab-btn" onclick="mostrarAba('cadastros',this)">📋 Cadastros</button>
+            <button class="tab-btn" onclick="mostrarAba('locais',this)">📍 Locais</button>
+            <button class="tab-btn" onclick="mostrarAba('sobre',this)">ℹ️ Sobre</button>
         </div>
 
         <!-- ============================================================ -->
@@ -68,18 +71,23 @@
         <!-- ============================================================ -->
         <div id="aba-solicitar" class="tab-content active">
             <h2>📝 Nova Solicitação</h2>
-            
             <div id="formulario-container">
                 <div class="form-row">
                     <div class="form-group"><label>📅 Data</label><input type="date" id="data_saida"></div>
-                    <div class="form-group"><label>🕐 Horário</label><select id="horario"><option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00" selected>14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option></select></div>
+                    <div class="form-group"><label>🕐 Horário</label><select id="horario">
+                        <option value="">Selecione...</option>
+                        <option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option>
+                        <option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option>
+                    </select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>📍 Saída</label><select id="local_saida"><option value="REITORIA">REITORIA</option><option value="EST">EST</option><option value="ESA">ESA</option><option value="ESAT">ESAT</option><option value="ENS">ENS</option><option value="ESO">ESO</option><option value="ED">ED</option><option value="Aeroporto">Aeroporto</option></select></div>
-                    <div class="form-group"><label>🎯 Destino</label><select id="destino"><option value="Aeroporto">Aeroporto</option><option value="REITORIA">REITORIA</option><option value="EST">EST</option><option value="ESA">ESA</option><option value="ESAT">ESAT</option><option value="ENS">ENS</option><option value="ESO">ESO</option><option value="ED">ED</option></select></div>
+                    <div class="form-group"><label>📍 Saída</label><select id="local_saida"><option value="">Selecione...</option><option value="REITORIA">REITORIA</option><option value="EST">EST</option><option value="ESA">ESA</option><option value="ESAT">ESAT</option><option value="ENS">ENS</option><option value="ESO">ESO</option><option value="ED">ED</option><option value="Aeroporto">Aeroporto</option></select></div>
+                    <div class="form-group"><label>🎯 Destino</label><select id="destino"><option value="">Selecione...</option><option value="Aeroporto">Aeroporto</option><option value="REITORIA">REITORIA</option><option value="EST">EST</option><option value="ESA">ESA</option><option value="ESAT">ESAT</option><option value="ENS">ENS</option><option value="ESO">ESO</option><option value="ED">ED</option></select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>👥 Pessoas</label><input type="range" id="qtd_pessoas" min="1" max="44" value="2" oninput="document.getElementById('qtd_valor').innerText=this.value"><span style="font-weight:bold;color:#1a56db;" id="qtd_valor">2</span></div>
+                    <div class="form-group"><label>👥 Pessoas <span id="qtd_valor" style="color:#1a56db;">2</span></label><input type="range" id="qtd_pessoas" min="1" max="44" value="2" oninput="document.getElementById('qtd_valor').innerText=this.value"></div>
                     <div class="form-group"><label>🔄 Retorna?</label><select id="retorna"><option value="Sim">Sim</option><option value="Não">Não</option></select></div>
                 </div>
                 <div class="form-group"><label>📋 Atividade</label><textarea id="atividade" rows="2" placeholder="Descreva a atividade..."></textarea></div>
@@ -88,8 +96,8 @@
                     <div class="form-group"><label>🏢 Setor</label><select id="setor"><option value="">Selecione...</option><option value="GR">GR</option><option value="GVR">GVR</option><option value="PROINT">PROINT</option><option value="PROEX">PROEX</option><option value="PROGRAD">PROGRAD</option><option value="PROPESP">PROPESP</option><option value="PROPLAN">PROPLAN</option><option value="ESA/UEA">ESA/UEA</option><option value="ENS/UEA">ENS/UEA</option></select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>📱 WhatsApp</label><input type="tel" id="telefone" placeholder="5592992178613" value="5592992178613"></div>
-                    <div class="form-group"><label>📧 Email</label><input type="email" id="email" placeholder="seuemail@uea.edu.br" value="leuler@uea.edu.br"></div>
+                    <div class="form-group"><label>📱 WhatsApp</label><input type="tel" id="telefone" placeholder="5592992178613"></div>
+                    <div class="form-group"><label>📧 Email</label><input type="email" id="email" placeholder="seuemail@uea.edu.br"></div>
                 </div>
                 <button class="btn btn-primary" onclick="solicitarTransporte()">🚀 SOLICITAR TRANSPORTE</button>
             </div>
@@ -107,6 +115,28 @@
             <div style="overflow-x:auto;">
                 <table><thead><tr><th>ID</th><th>Data</th><th>Solicitante</th><th>Rota</th><th>Km</th><th>Status</th><th>Ações</th></tr></thead>
                 <tbody id="corpo-tabela"></tbody></table>
+            </div>
+        </div>
+
+        <!-- MODAL DE CONFIRMAÇÃO -->
+        <div class="modal-overlay" id="modal-confirmar">
+            <div class="modal">
+                <h3>✅ Confirmar Solicitação</h3>
+                <div class="form-group"><label>🚘 Veículo</label><select id="modal-veiculo"></select></div>
+                <div class="form-group"><label>👨‍✈️ Motorista</label><select id="modal-motorista"></select></div>
+                <div class="form-group"><label>🕐 Horário de Saída</label><input type="text" id="modal-horario" placeholder="14:00"></div>
+                <button class="btn btn-success" onclick="confirmarModal()">✅ CONFIRMAR E ENVIAR WHATSAPP</button>
+                <button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- MODAL DE REJEIÇÃO -->
+        <div class="modal-overlay" id="modal-rejeitar">
+            <div class="modal">
+                <h3>❌ Rejeitar Solicitação</h3>
+                <div class="form-group"><label>📝 Motivo da Rejeição</label><textarea id="modal-motivo" rows="3" placeholder="Informe o motivo..."></textarea></div>
+                <button class="btn btn-danger" onclick="rejeitarModal()">❌ REJEITAR E NOTIFICAR</button>
+                <button class="btn btn-secondary" onclick="fecharModalRejeitar()">Cancelar</button>
             </div>
         </div>
 
@@ -147,13 +177,15 @@
         <!-- ABA SOBRE -->
         <!-- ============================================================ -->
         <div id="aba-sobre" class="tab-content">
-            <h2>ℹ️ Transporte UEA v8.0</h2>
+            <h2>ℹ️ Transporte UEA v9.0</h2>
             <div class="card">
                 <h3>📧 Fluxo de Notificações</h3>
-                <p>1️⃣ Solicitante preenche → recebe <b>EMAIL automático</b></p>
-                <p>2️⃣ Admin confirma → envia <b>WHATSAPP</b> ao solicitante</p>
+                <p>1️⃣ Solicitante → <b>EMAIL automático</b> com comprovante</p>
+                <p>2️⃣ Admin confirma → <b>WHATSAPP</b> com veículo e motorista</p>
+                <p>3️⃣ Admin rejeita → <b>WHATSAPP</b> com motivo</p>
             </div>
             <p><strong>Admin:</strong> leuler@uea.edu.br</p>
+            <p><strong>WhatsApp Setor:</strong> (92) 99217-8613</p>
         </div>
     </div>
 
@@ -161,32 +193,33 @@
         // ============================================================
         // BANCO DE DADOS
         // ============================================================
-        function getDB(k) { try { return JSON.parse(localStorage.getItem(k)||'[]'); } catch(e) { return []; } }
-        function setDB(k, d) { localStorage.setItem(k, JSON.stringify(d)); }
+        function getDB(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return[];}}
+        function setDB(k,d){localStorage.setItem(k,JSON.stringify(d));}
 
-        const LOCAIS_UEA = {
-            "REITORIA": {endereco:"Av. Djalma Batista, 3578 - Flores, Manaus - AM, 69050-010", cep:"69050-010", lat:-3.0952, lon:-60.0218},
-            "EST": {endereco:"Av. Darcy Vargas, 1200 - Parque Dez, Manaus - AM, 69050-020", cep:"69050-020", lat:-3.0787, lon:-60.0150},
-            "ESA": {endereco:"Av. Carvalho Leal, 1777 - Cachoeirinha, Manaus - AM, 69065-001", cep:"69065-001", lat:-3.1225, lon:-60.0180},
-            "ESAT": {endereco:"Av. Leonardo Malcher, 1728 - Praça 14, Manaus - AM, 69020-170", cep:"69020-170", lat:-3.1280, lon:-60.0220},
-            "ENS": {endereco:"Av. Djalma Batista, 2470 - Chapada, Manaus - AM, 69050-010", cep:"69050-010", lat:-3.0980, lon:-60.0250},
-            "ESO": {endereco:"Av. Castelo Branco, 504 - Cachoeirinha, Manaus - AM, 69065-010", cep:"69065-010", lat:-3.1250, lon:-60.0200},
-            "ED": {endereco:"Av. Leonardo Malcher, 1140 - Centro, Manaus - AM, 69020-170", cep:"69020-170", lat:-3.1300, lon:-60.0240},
-            "Aeroporto": {endereco:"Av. Santos Dumont, 1350 - Tarumã, Manaus - AM, 69041-000", cep:"69041-000", lat:-3.0386, lon:-60.0497},
+        const LOCAIS_UEA={
+            "REITORIA":{endereco:"Av. Djalma Batista, 3578 - Flores, Manaus - AM, 69050-010",cep:"69050-010",lat:-3.0952,lon:-60.0218},
+            "EST":{endereco:"Av. Darcy Vargas, 1200 - Parque Dez, Manaus - AM, 69050-020",cep:"69050-020",lat:-3.0787,lon:-60.0150},
+            "ESA":{endereco:"Av. Carvalho Leal, 1777 - Cachoeirinha, Manaus - AM, 69065-001",cep:"69065-001",lat:-3.1225,lon:-60.0180},
+            "ESAT":{endereco:"Av. Leonardo Malcher, 1728 - Praça 14, Manaus - AM, 69020-170",cep:"69020-170",lat:-3.1280,lon:-60.0220},
+            "ENS":{endereco:"Av. Djalma Batista, 2470 - Chapada, Manaus - AM, 69050-010",cep:"69050-010",lat:-3.0980,lon:-60.0250},
+            "ESO":{endereco:"Av. Castelo Branco, 504 - Cachoeirinha, Manaus - AM, 69065-010",cep:"69065-010",lat:-3.1250,lon:-60.0200},
+            "ED":{endereco:"Av. Leonardo Malcher, 1140 - Centro, Manaus - AM, 69020-170",cep:"69020-170",lat:-3.1300,lon:-60.0240},
+            "Aeroporto":{endereco:"Av. Santos Dumont, 1350 - Tarumã, Manaus - AM, 69041-000",cep:"69041-000",lat:-3.0386,lon:-60.0497},
         };
 
-        function calcRota(lat1,lon1,lat2,lon2) {
-            const R=6371, dLat=(lat2-lat1)*Math.PI/180, dLon=(lon2-lon1)*Math.PI/180;
-            const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+        let indexSelecionado = null;
+
+        function calcRota(l1,lo1,l2,lo2){
+            const R=6371,dLa=(l2-l1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180;
+            const a=Math.sin(dLa/2)**2+Math.cos(l1*Math.PI/180)*Math.cos(l2*Math.PI/180)*Math.sin(dLo/2)**2;
             const d=Math.round(R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))*100)/100;
-            return {distancia:d, duracao:Math.round(d/50*60)};
+            return{distancia:d,duracao:Math.round(d/50*60)};
         }
+        function linkMapa(l1,lo1,l2,lo2){return`https://www.openstreetmap.org/directions?from=${l1},${lo1}&to=${l2},${lo2}`;}
+        function linkWpp(num,msg){let n=num.replace(/\D/g,'');if(!n.startsWith('55'))n='55'+n;return`https://wa.me/${n}?text=${encodeURIComponent(msg)}`;}
+        function gerarID(){return'SOL'+Date.now().toString(36).toUpperCase().slice(-6);}
 
-        function linkMapa(l1,l2,lo1,lo2) { return `https://www.openstreetmap.org/directions?from=${l1},${lo1}&to=${l2},${lo2}`; }
-        function linkWpp(num,msg) { let n=num.replace(/\D/g,''); if(!n.startsWith('55')) n='55'+n; return `https://wa.me/${n}?text=${encodeURIComponent(msg)}`; }
-        function gerarID() { return 'SOL'+Date.now().toString(36).toUpperCase().slice(-6); }
-
-        function mostrarAba(aba, btn) {
+        function mostrarAba(aba,btn){
             document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
             document.getElementById('aba-'+aba).classList.add('active');
@@ -194,128 +227,108 @@
         }
 
         // ============================================================
-        // ENVIO DE EMAIL (via mailto + EmailJS fallback)
+        // EMAIL
         // ============================================================
-        function enviarEmailConfirmacao(email, nome, id, data, horario, origem, destino, distancia, duracao) {
-            const assunto = `✅ Solicitação ${id} Registrada - Transporte UEA`;
-            const corpo = `
-Sua solicitação de transporte foi REGISTRADA com sucesso!
-
-🆔 ID: ${id}
-👤 Solicitante: ${nome}
-📅 Data: ${data} às ${horario}
-📍 Rota: ${origem} → ${destino}
-📏 Distância: ${distancia} km
-⏱️ Tempo estimado: ${duracao} minutos
-
-⏳ Aguarde a confirmação do setor de transporte.
-Você receberá o veículo e motorista designados.
-
-🚗 Transporte UEA - Universidade do Estado do Amazonas
-            `.trim();
-
-            // Método 1: Abrir cliente de email
-            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
-            
-            // Método 2: Tentar enviar via serviço gratuito (simulação)
-            // Em produção, use EmailJS ou SMTP
-            console.log('📧 Email seria enviado para:', email);
-            console.log('📋 Assunto:', assunto);
-            
-            // Abre o cliente de email automaticamente
-            setTimeout(() => {
-                window.open(mailtoLink, '_blank');
-            }, 1000);
-            
-            return true;
+        function enviarEmail(email,nome,id,data,horario,origem,destino,distancia,duracao){
+            const assunto=`✅ Solicitação ${id} Registrada - Transporte UEA`;
+            const corpo=`Sua solicitação de transporte foi REGISTRADA!\n\n🆔 ${id}\n👤 ${nome}\n📅 ${data} às ${horario}\n📍 ${origem} → ${destino}\n📏 ${distancia} km | ⏱️ ~${duracao} min\n\n⏳ Aguarde a confirmação do veículo e motorista.\n\n🚗 Transporte UEA`;
+            const link=`mailto:${email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+            setTimeout(()=>window.open(link,'_blank'),800);
+            console.log('📧 Email:',email);
         }
 
         // ============================================================
         // SOLICITAÇÃO
         // ============================================================
-        function solicitarTransporte() {
-            const data_saida = document.getElementById('data_saida').value;
-            const horario = document.getElementById('horario').value;
-            const local_saida = document.getElementById('local_saida').value;
-            const destino = document.getElementById('destino').value;
-            const qtd = document.getElementById('qtd_pessoas').value;
-            const retorna = document.getElementById('retorna').value;
-            const atividade = document.getElementById('atividade').value;
-            const solicitante = document.getElementById('solicitante').value;
-            const setor = document.getElementById('setor').value;
-            const telefone = document.getElementById('telefone').value;
-            const email = document.getElementById('email').value;
+        function solicitarTransporte(){
+            const data_saida=document.getElementById('data_saida').value;
+            const horario=document.getElementById('horario').value;
+            const local_saida=document.getElementById('local_saida').value;
+            const destino=document.getElementById('destino').value;
+            const qtd=document.getElementById('qtd_pessoas').value;
+            const retorna=document.getElementById('retorna').value;
+            const atividade=document.getElementById('atividade').value;
+            const solicitante=document.getElementById('solicitante').value;
+            const setor=document.getElementById('setor').value;
+            const telefone=document.getElementById('telefone').value;
+            const email=document.getElementById('email').value;
 
-            const erros = [];
-            if (!data_saida) erros.push('Data');
-            if (!local_saida) erros.push('Local de Saída');
-            if (!destino) erros.push('Destino');
-            if (!atividade) erros.push('Atividade');
-            if (!solicitante) erros.push('Nome do Solicitante');
+            const erros=[];
+            if(!data_saida)erros.push('Data');
+            if(!horario)erros.push('Horário');
+            if(!local_saida)erros.push('Local de Saída');
+            if(!destino)erros.push('Destino');
+            if(!atividade)erros.push('Atividade');
+            if(!solicitante)erros.push('Solicitante');
 
-            if (erros.length) {
-                alert('❌ Preencha: ' + erros.join(', '));
-                return;
-            }
+            if(erros.length){alert('❌ Preencha: '+erros.join(', '));return;}
 
-            const o = LOCAIS_UEA[local_saida] || {lat:-3.0952,lon:-60.0218,endereco:local_saida,cep:'N/D'};
-            const d = LOCAIS_UEA[destino] || {lat:-3.0386,lon:-60.0497,endereco:destino,cep:'N/D'};
-            const {distancia, duracao} = calcRota(o.lat,o.lon,d.lat,d.lon);
-            const mapa = linkMapa(o.lat,o.lon,d.lat,d.lon);
-            const id = gerarID();
-            const partes = data_saida.split('-');
-            const dataF = `${partes[2]}/${partes[1]}/${partes[0]}`;
+            const o=LOCAIS_UEA[local_saida]||{lat:-3.0952,lon:-60.0218,endereco:local_saida,cep:'N/D'};
+            const d=LOCAIS_UEA[destino]||{lat:-3.0386,lon:-60.0497,endereco:destino,cep:'N/D'};
+            const{distancia,duracao}=calcRota(o.lat,o.lon,d.lat,d.lon);
+            const mapa=linkMapa(o.lat,o.lon,d.lat,d.lon);
+            const id=gerarID();
+            const partes=data_saida.split('-');
+            const dataF=`${partes[2]}/${partes[1]}/${partes[0]}`;
 
-            const solicitacoes = getDB('solicitacoes');
+            const solicitacoes=getDB('solicitacoes');
             solicitacoes.push({id,data:dataF,horario,local_saida,destino,qtd_pessoas:qtd,retorna,atividade,solicitante,setor,telefone,email,distancia,duracao,linkMapa:mapa,status:'PENDENTE',veiculo:'',motorista:'',horario_previsto:''});
-            setDB('solicitacoes', solicitacoes);
+            setDB('solicitacoes',solicitacoes);
 
-            // Enviar email para o solicitante
-            const emailEnviado = enviarEmailConfirmacao(email, solicitante, id, dataF, horario, local_saida, destino, distancia, duracao);
+            enviarEmail(email,solicitante,id,dataF,horario,local_saida,destino,distancia,duracao);
 
-            const resultado = document.getElementById('resultado-solicitacao');
-            resultado.innerHTML = `
+            const resultado=document.getElementById('resultado-solicitacao');
+            resultado.innerHTML=`
                 <h2 style="color:#10b981;">✅ Solicitação Registrada!</h2>
                 <p><strong>🆔 ID:</strong> ${id}</p>
                 <p><strong>📅 Data:</strong> ${dataF} às ${horario}</p>
                 <p><strong>📍 Rota:</strong> ${local_saida} → ${destino}</p>
-                <p><strong>📏 Distância:</strong> ${distancia} km | <strong>⏱️ Tempo:</strong> ~${duracao} min</p>
-                <p><strong>👥 Passageiros:</strong> ${qtd}</p>
-                <p><a href="${mapa}" target="_blank" style="color:#1a56db;">🗺️ Ver Rota no Mapa</a></p>
+                <p><strong>📏 Distância:</strong> ${distancia} km | <strong>⏱️:</strong> ~${duracao} min</p>
+                <p><a href="${mapa}" target="_blank" style="color:#1a56db;">🗺️ Ver no Mapa</a></p>
                 <div class="email-box">
-                    <p style="font-weight:bold;">📧 Email enviado para:</p>
+                    <p style="font-weight:bold;">📧 Comprovante enviado para:</p>
                     <p style="font-size:16px;color:#0284c7;">${email}</p>
-                    <p style="font-size:11px;color:#666;">Verifique sua caixa de entrada (e spam)</p>
+                    <p style="font-size:11px;color:#666;">Verifique sua caixa de entrada</p>
                 </div>
-                <p style="text-align:center;color:#666;font-size:12px;">⏳ Aguarde a confirmação com veículo e motorista</p>
+                <p style="text-align:center;color:#666;font-size:12px;">⏳ Aguarde a confirmação do veículo e motorista</p>
             `;
             resultado.classList.add('show');
-            document.getElementById('formulario-container').style.display = 'none';
-            document.getElementById('btn-nova').style.display = 'block';
+            document.getElementById('formulario-container').style.display='none';
+            document.getElementById('btn-nova').style.display='block';
             atualizarPainel();
         }
 
-        function novaSolicitacao() {
-            document.getElementById('formulario-container').style.display = 'block';
-            document.getElementById('btn-nova').style.display = 'none';
+        function novaSolicitacao(){
+            // Limpar formulário
+            document.getElementById('data_saida').valueAsDate=new Date();
+            document.getElementById('horario').value='';
+            document.getElementById('local_saida').value='';
+            document.getElementById('destino').value='';
+            document.getElementById('qtd_pessoas').value=2;
+            document.getElementById('qtd_valor').innerText='2';
+            document.getElementById('atividade').value='';
+            document.getElementById('solicitante').value='';
+            document.getElementById('setor').value='';
+            document.getElementById('telefone').value='';
+            document.getElementById('email').value='';
+            
+            document.getElementById('formulario-container').style.display='block';
+            document.getElementById('btn-nova').style.display='none';
             document.getElementById('resultado-solicitacao').classList.remove('show');
-            document.getElementById('resultado-solicitacao').innerHTML = '';
+            document.getElementById('resultado-solicitacao').innerHTML='';
         }
 
         // ============================================================
-        // PAINEL (ADMIN CONFIRMA E ENVIA WHATSAPP)
+        // PAINEL
         // ============================================================
-        function atualizarPainel() {
-            const solicitacoes = getDB('solicitacoes');
-            const tbody = document.getElementById('corpo-tabela');
-            const resumo = document.getElementById('resumo-painel');
-
-            if (!solicitacoes.length) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">📋 Nenhuma solicitação</td></tr>';
-                resumo.innerHTML = '📋 Nenhuma solicitação.';
-                return;
+        function atualizarPainel(){
+            const solicitacoes=getDB('solicitacoes');
+            const tbody=document.getElementById('corpo-tabela');
+            const resumo=document.getElementById('resumo-painel');
+            if(!solicitacoes.length){
+                tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;">📋 Nenhuma solicitação</td></tr>';
+                resumo.innerHTML='📋 Nenhuma solicitação.';return;
             }
-
             let p=0,c=0,r=0,html='';
             solicitacoes.forEach((s,i)=>{
                 if(s.status==='PENDENTE')p++;
@@ -326,89 +339,134 @@ Você receberá o veículo e motorista designados.
                 if(s.status==='REJEITADA')bc='badge-rejeitada';
                 let acoes='';
                 if(s.status==='PENDENTE'){
-                    acoes=`<button onclick="confirmar(${i})" style="background:#10b981;color:white;border:none;padding:5px 8px;border-radius:5px;cursor:pointer;font-size:11px;margin:2px;">✅</button>
-                           <button onclick="rejeitar(${i})" style="background:#ef4444;color:white;border:none;padding:5px 8px;border-radius:5px;cursor:pointer;font-size:11px;">❌</button>`;
+                    acoes=`<button onclick="abrirModalConfirmar(${i})" class="btn btn-sm" style="background:#10b981;color:white;">✅</button>
+                           <button onclick="abrirModalRejeitar(${i})" class="btn btn-sm" style="background:#ef4444;color:white;">❌</button>`;
                 }else if(s.status==='CONFIRMADA'){
                     acoes=`<small>🚘 ${s.veiculo}<br>👨‍✈️ ${s.motorista}</small>`;
                 }else{acoes='—';}
                 html+=`<tr><td><strong>${s.id}</strong></td><td>${s.data}</td><td>${s.solicitante}</td><td>${s.local_saida}→${s.destino}</td><td>${s.distancia}</td><td><span class="badge ${bc}">${s.status}</span></td><td>${acoes}</td></tr>`;
             });
-            tbody.innerHTML = html;
-            resumo.innerHTML = `⏳ <strong>${p}</strong> Pendentes | ✅ <strong>${c}</strong> Confirmadas | ❌ <strong>${r}</strong> Rejeitadas | 📋 <strong>${solicitacoes.length}</strong> Total`;
+            tbody.innerHTML=html;
+            resumo.innerHTML=`⏳ <strong>${p}</strong> Pendentes | ✅ <strong>${c}</strong> Confirmadas | ❌ <strong>${r}</strong> Rejeitadas | 📋 <strong>${solicitacoes.length}</strong> Total`;
         }
 
-        function confirmar(index) {
-            const solicitacoes = getDB('solicitacoes');
-            const s = solicitacoes[index];
+        // ============================================================
+        // MODAL CONFIRMAR
+        // ============================================================
+        function abrirModalConfirmar(index){
+            indexSelecionado=index;
+            const veiculos=getDB('veiculos');
+            const motoristas=getDB('motoristas');
             
-            const veiculo = prompt('🚘 Designar Veículo (ex: Van Sprinter - ABC-1234):');
-            if (!veiculo) return;
-            const motorista = prompt('👨‍✈️ Designar Motorista:');
-            if (!motorista) return;
-            const horario = prompt('🕐 Horário Previsto de Saída:', s.horario);
+            let optV='<option value="">Selecione um veículo...</option>';
+            veiculos.forEach(v=>optV+=`<option value="${v.marca} ${v.modelo} - ${v.placa}">${v.marca} ${v.modelo} - ${v.placa} (${v.capacidade}lug)</option>`);
+            if(!veiculos.length)optV+='<option value="">⚠️ Nenhum veículo cadastrado</option>';
             
-            s.status = 'CONFIRMADA';
-            s.veiculo = veiculo;
-            s.motorista = motorista;
-            s.horario_previsto = horario;
-            setDB('solicitacoes', solicitacoes);
+            let optM='<option value="">Selecione um motorista...</option>';
+            motoristas.forEach(m=>optM+=`<option value="${m.nome}">${m.nome} - ${m.whatsapp}</option>`);
+            if(!motoristas.length)optM+='<option value="">⚠️ Nenhum motorista cadastrado</option>';
+            
+            document.getElementById('modal-veiculo').innerHTML=optV;
+            document.getElementById('modal-motorista').innerHTML=optM;
+            
+            const s=getDB('solicitacoes')[index];
+            document.getElementById('modal-horario').value=s.horario;
+            
+            document.getElementById('modal-confirmar').classList.add('active');
+        }
 
-            // ENVIAR WHATSAPP PARA O SOLICITANTE
-            const msg = `✅ *TRANSPORTE CONFIRMADO!*\n\n🆔 ${s.id}\n👤 ${s.solicitante}\n📅 ${s.data} às ${horario}\n📍 ${s.local_saida} → ${s.destino}\n🚘 Veículo: ${veiculo}\n👨‍✈️ Motorista: ${motorista}\n📏 ${s.distancia} km\n\n*Boa viagem! 🚀*\n_Transporte UEA_`;
-            const link = linkWpp(s.telefone, msg);
+        function confirmarModal(){
+            const veiculo=document.getElementById('modal-veiculo').value;
+            const motorista=document.getElementById('modal-motorista').value;
+            const horario=document.getElementById('modal-horario').value;
             
-            // Abrir WhatsApp automaticamente
-            window.open(link, '_blank');
+            if(!veiculo){alert('Selecione um veículo!');return;}
+            if(!motorista){alert('Selecione um motorista!');return;}
             
-            alert(`✅ Solicitação ${s.id} CONFIRMADA!\n\n📱 WhatsApp enviado para:\n${s.telefone}\n\n🚘 ${veiculo}\n👨‍✈️ ${motorista}\n🕐 ${horario}`);
+            const solicitacoes=getDB('solicitacoes');
+            const s=solicitacoes[indexSelecionado];
+            s.status='CONFIRMADA';
+            s.veiculo=veiculo;
+            s.motorista=motorista;
+            s.horario_previsto=horario;
+            setDB('solicitacoes',solicitacoes);
+            
+            // WhatsApp
+            const msg=`✅ *TRANSPORTE CONFIRMADO!*\n\n🆔 ${s.id}\n👤 ${s.solicitante}\n📅 ${s.data} às ${horario}\n📍 ${s.local_saida} → ${s.destino}\n🚘 *${veiculo}*\n👨‍✈️ *${motorista}*\n📏 ${s.distancia} km\n\n*Boa viagem! 🚀*\n_Transporte UEA_`;
+            const link=linkWpp(s.telefone,msg);
+            window.open(link,'_blank');
+            
+            document.getElementById('modal-confirmar').classList.remove('active');
+            alert(`✅ Solicitação CONFIRMADA!\n\n📱 WhatsApp enviado para:\n${s.telefone}`);
             atualizarPainel();
         }
 
-        function rejeitar(index) {
-            if (!confirm('Rejeitar esta solicitação?')) return;
-            const solicitacoes = getDB('solicitacoes');
-            solicitacoes[index].status = 'REJEITADA';
-            setDB('solicitacoes', solicitacoes);
+        // ============================================================
+        // MODAL REJEITAR
+        // ============================================================
+        function abrirModalRejeitar(index){
+            indexSelecionado=index;
+            document.getElementById('modal-motivo').value='';
+            document.getElementById('modal-rejeitar').classList.add('active');
+        }
+
+        function rejeitarModal(){
+            const motivo=document.getElementById('modal-motivo').value;
+            if(!motivo){alert('Informe o motivo da rejeição!');return;}
+            
+            const solicitacoes=getDB('solicitacoes');
+            const s=solicitacoes[indexSelecionado];
+            s.status='REJEITADA';
+            s.motivo=motivo;
+            setDB('solicitacoes',solicitacoes);
+            
+            // WhatsApp
+            const msg=`❌ *SOLICITAÇÃO NÃO ATENDIDA*\n\n🆔 ${s.id}\n👤 ${s.solicitante}\n📅 ${s.data}\n📍 ${s.local_saida} → ${s.destino}\n\n📝 *Motivo:* ${motivo}\n\n📞 Dúvidas: (92) 99217-8613\n_Transporte UEA_`;
+            const link=linkWpp(s.telefone,msg);
+            window.open(link,'_blank');
+            
+            document.getElementById('modal-rejeitar').classList.remove('active');
+            alert(`❌ Solicitação REJEITADA!\n\n📱 WhatsApp enviado para:\n${s.telefone}\n📝 Motivo: ${motivo}`);
             atualizarPainel();
         }
+
+        function fecharModal(){document.getElementById('modal-confirmar').classList.remove('active');}
+        function fecharModalRejeitar(){document.getElementById('modal-rejeitar').classList.remove('active');}
 
         // ============================================================
         // CADASTROS
         // ============================================================
-        function cadVeiculo() {
+        function cadVeiculo(){
             const m=document.getElementById('marca').value,mo=document.getElementById('modelo').value,p=document.getElementById('placa').value;
-            if(!m||!mo||!p){alert('Preencha todos!');return;}
+            if(!m||!mo||!p){alert('Preencha Marca, Modelo e Placa!');return;}
             const veiculos=getDB('veiculos');
-            veiculos.push({marca:m,modelo:mo,placa:p.toUpperCase(),tipo:document.getElementById('tipo').value,capacidade:document.getElementById('capacidade').value});
+            veiculos.push({marca:m,modelo:mo,placa:p.toUpperCase(),tipo:document.getElementById('tipo').value,capacidade:document.getElementById('capacidade').value||15});
             setDB('veiculos',veiculos);
             document.getElementById('msg-veiculo').innerHTML=`<p style="color:#10b981;">✅ ${m} ${mo} - ${p.toUpperCase()} (${veiculos.length} veículos)</p>`;
             document.getElementById('marca').value='';document.getElementById('modelo').value='';document.getElementById('placa').value='';
         }
 
-        function cadMotorista() {
+        function cadMotorista(){
             const n=document.getElementById('nome_mot').value,w=document.getElementById('wpp_mot').value;
             if(!n||!w){alert('Preencha Nome e WhatsApp!');return;}
             const motoristas=getDB('motoristas');
-            motoristas.push({nome:n,whatsapp:w,cnh:document.getElementById('cnh_mot').value,categoria:document.getElementById('cat_mot').value});
+            motoristas.push({nome:n,whatsapp:w});
             setDB('motoristas',motoristas);
             document.getElementById('msg-motorista').innerHTML=`<p style="color:#10b981;">✅ ${n} (${motoristas.length} motoristas)</p>`;
-            document.getElementById('nome_mot').value='';document.getElementById('wpp_mot').value='';document.getElementById('cnh_mot').value='';
+            document.getElementById('nome_mot').value='';document.getElementById('wpp_mot').value='';
         }
 
         // ============================================================
         // INICIALIZAÇÃO
         // ============================================================
-        document.getElementById('data_saida').valueAsDate = new Date();
+        document.getElementById('data_saida').valueAsDate=new Date();
         
-        // Preencher tabela de locais
-        let htmlLocais = '';
-        for (const [nome, dados] of Object.entries(LOCAIS_UEA)) {
-            htmlLocais += `<tr><td>${nome}</td><td>${dados.endereco}</td><td>${dados.cep}</td></tr>`;
-        }
-        document.getElementById('corpo-locais').innerHTML = htmlLocais;
+        let htmlLocais='';
+        for(const[nome,dados]of Object.entries(LOCAIS_UEA))htmlLocais+=`<tr><td>${nome}</td><td>${dados.endereco}</td><td>${dados.cep}</td></tr>`;
+        document.getElementById('corpo-locais').innerHTML=htmlLocais;
         
         atualizarPainel();
-        console.log('✅ Transporte UEA v8.0 carregado!');
+        console.log('✅ Transporte UEA v9.0 pronto!');
     </script>
 </body>
 </html>
